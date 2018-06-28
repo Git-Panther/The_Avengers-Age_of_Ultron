@@ -1,8 +1,10 @@
-package ein.mono.profil.model.vo;
+package ein.mono.profile.model.vo;
+
+import java.util.HashMap;
 
 import ein.mono.member.model.vo.MemberVo;
 
-public class ProfilVo extends MemberVo{
+public class ProfileVo extends MemberVo{
 	//memberVo를 상속받고 + 업체 추가 정보
 	
 	private String partnerCode; //업체코드
@@ -13,17 +15,21 @@ public class ProfilVo extends MemberVo{
 	private String partnerLocation; //시공지역
 	private String partnerStyles; //스타일
 	private String partnerIntro; //업체소개
+	private String weekdaysStart; // 평일상담시작시간
+	private String weekdaysEnd; // 평일상담종료시간
+	private String weekendStart; // 주말상담시작시간
+	private String weekendEnd; // 주말상담종료시간
+
+	private HashMap<String, String> ptnUpdates = new HashMap<String, String>();// 추가정보 리스트	
+	private HashMap<String, String> ptnContacts = new HashMap<String, String>();// 연락처
+	private HashMap<String, Integer> ptnPhoto = new HashMap<String, Integer>(); // 업체 사진들
+	private int favorites; // 즐겨찾기 보유수
+	private int metascore; // 평점
 	
-	private String weekdaysStart;
-	private String weekdaysEnd;
-	private String weekendStart;
-	private String weekendEnd;
-	
-	
-	public ProfilVo(){}
+	public ProfileVo(){}
 
 
-	public ProfilVo(String partnerCode, String partnerOwner, String partnerCheck, String partnerLicense,
+	public ProfileVo(String partnerCode, String partnerOwner, String partnerCheck, String partnerLicense,
 			String partnerLogo, String partnerLocation, String partnerStyles, String partnerIntro, String weekdaysStart,
 			String weekdaysEnd, String weekendStart, String weekendEnd) {
 		super();
@@ -161,21 +167,66 @@ public class ProfilVo extends MemberVo{
 		this.weekendEnd = weekendEnd;
 	}
 
+	
+	
+	public HashMap<String, String> getPtnUpdates() {
+		return ptnUpdates;
+	}
+
+
+	public void setPtnUpdates(HashMap<String, String> ptnUpdates) {
+		this.ptnUpdates = ptnUpdates;
+	}
+
+
+	public HashMap<String, String> getPtnContacts() {
+		return ptnContacts;
+	}
+
+
+	public void setPtnContacts(HashMap<String, String> ptnContacts) {
+		this.ptnContacts = ptnContacts;
+	}
+
+
+	public HashMap<String, Integer> getPtnPhoto() {
+		return ptnPhoto;
+	}
+
+
+	public void setPtnPhoto(HashMap<String, Integer> ptnPhoto) {
+		this.ptnPhoto = ptnPhoto;
+	}
+
+
+	public int getFavorites() {
+		return favorites;
+	}
+
+
+	public void setFavorites(int favorites) {
+		this.favorites = favorites;
+	}
+
+
+	public int getMetascore() {
+		return metascore;
+	}
+
+
+	public void setMetascore(int metascore) {
+		this.metascore = metascore;
+	}
+
 
 	@Override
 	public String toString() {
-		return "ProfilVo [partnerCode=" + partnerCode + ", partnerOwner=" + partnerOwner + ", partnerCheck="
+		return "ProfileVo [partnerCode=" + partnerCode + ", partnerOwner=" + partnerOwner + ", partnerCheck="
 				+ partnerCheck + ", partnerLicense=" + partnerLicense + ", partnerLogo=" + partnerLogo
 				+ ", partnerLocation=" + partnerLocation + ", partnerStyles=" + partnerStyles + ", partnerIntro="
 				+ partnerIntro + ", weekdaysStart=" + weekdaysStart + ", weekdaysEnd=" + weekdaysEnd + ", weekendStart="
-				+ weekendStart + ", weekendEnd=" + weekendEnd + "]";
+				+ weekendStart + ", weekendEnd=" + weekendEnd + ", ptnUpdates=" + ptnUpdates + ", ptnContacts="
+				+ ptnContacts + ", ptnPhoto=" + ptnPhoto + ", favorites=" + favorites + ", metascore=" + metascore
+				+ "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

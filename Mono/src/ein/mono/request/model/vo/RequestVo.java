@@ -5,9 +5,9 @@ import java.util.List;
 
 public class RequestVo { // 신청 공통 사항
 	private String reqCode; // 신청 코드
-	private String reqTitle; // 신청 제목
-	private String memberCode; // 신청자의 코드
-	private String memberName; // 신청자의 이름
+	//private String reqTitle; // 신청 제목
+	private String userCode; // 신청자의 코드
+	private String userName; // 신청자의 이름
 	private String ptnCode; // 시공을 담당할 업체
 	private String ptnName; // 시공을 담당할 업체의 이름
 	private String constAddress; // 시공지 주소
@@ -36,7 +36,7 @@ public class RequestVo { // 신청 공통 사항
 	public void setReqCode(String reqCode) {
 		this.reqCode = reqCode;
 	}
-
+/*
 	public String getReqTitle() {
 		return reqTitle;
 	}
@@ -44,13 +44,13 @@ public class RequestVo { // 신청 공통 사항
 	public void setReqTitle(String reqTitle) {
 		this.reqTitle = reqTitle;
 	}
-
-	public String getMemberCode() {
-		return memberCode;
+*/
+	public String getUserCode() {
+		return userCode;
 	}
 
-	public void setMemberCode(String memberCode) {
-		this.memberCode = memberCode;
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 
 	public String getPtnCode() {
@@ -181,12 +181,12 @@ public class RequestVo { // 신청 공통 사항
 		this.innerConst = innerConst;
 	}
 
-	public String getMemberName() {
-		return memberName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPtnName() {

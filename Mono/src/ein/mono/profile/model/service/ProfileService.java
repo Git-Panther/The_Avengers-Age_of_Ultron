@@ -1,29 +1,29 @@
-package ein.mono.profil.model.service;
+package ein.mono.profile.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import ein.mono.common.JDBCTemplate;
-import ein.mono.profil.model.dao.ProfilDao;
-import ein.mono.profil.model.vo.ProfilVo;
+import ein.mono.profile.model.dao.ProfileDao;
+import ein.mono.profile.model.vo.ProfileVo;
 
-public class ProfilService {
+public class ProfileService {
 
-	public ArrayList<ProfilVo> selectProfilList(int pCode) {
+	public ArrayList<ProfileVo> selectProfileList(int pCode) {
 		
 		//1. 커넥션 연결
 		Connection con = JDBCTemplate.getConnection(); 
 	//2. dao 메소드 호출
-		ArrayList<ProfilVo> list = new ProfilDao().selectProfilList(con, pCode);
+		ArrayList<ProfileVo> list = new ProfileDao().selectProfileList(con, pCode);
 	//3. 자원반납
 		JDBCTemplate.close(con);
 	//4. 해당 결과 리턴
 		return list;
 	}
 
-	public int updateProfil(ProfilVo profil) {
+	public int updateProfile(ProfileVo profil) {
 		Connection con = JDBCTemplate.getConnection();
-		int result = new ProfilDao().updateProfil(con, profil);
+		int result = new ProfileDao().updateProfile(con, profil);
 		if(0 < result) {
 			JDBCTemplate.commit(con);
 		}else {

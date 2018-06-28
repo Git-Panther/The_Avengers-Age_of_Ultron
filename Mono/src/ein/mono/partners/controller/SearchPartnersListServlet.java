@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ein.mono.common.PageInfo;
 import ein.mono.partners.model.service.PartnersService;
-import ein.mono.partners.model.vo.PartnersVo;
+import ein.mono.profile.model.vo.ProfileVo;
 
 /**
  * Servlet implementation class SearchPartnersListServlet
@@ -37,7 +37,7 @@ public class SearchPartnersListServlet extends HttpServlet { // 회원이 검색
 		String keyword = request.getParameter("keyword"); // 검색 키워드
 		String condition = request.getParameter("condition"); // 검색 기준
 		PageInfo pageInfo = new PageInfo();
-		ArrayList<PartnersVo> list = new PartnersService().selectPartnersListByKeyword(condition, keyword);
+		ArrayList<ProfileVo> list = new PartnersService().selectPartnersListByKeyword(condition, keyword);
 		// 검색 조건이 무엇이냐에 따라 불러오는 쿼리는 달라진다. 표시하는 방법과 페이징은 같다.
 	}
 

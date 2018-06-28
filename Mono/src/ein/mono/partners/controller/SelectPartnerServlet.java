@@ -1,30 +1,23 @@
-package ein.mono.profil.controller;
+package ein.mono.partners.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ein.mono.profil.model.service.ProfilService;
-import ein.mono.profil.model.vo.ProfilVo;
-
-
-
 /**
- * Servlet implementation class ProfilListServlet
+ * Servlet implementation class SelectPartnerServlet
  */
-@WebServlet("/ProfilList.do")
-public class ProfilListServlet extends HttpServlet {
+@WebServlet("/selectPartner.do")
+public class SelectPartnerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProfilListServlet() {
+    public SelectPartnerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,13 +26,11 @@ public class ProfilListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String ptnCode = request.getParameter("partnerCode");
 		
 		
-		int pCode = Integer.parseInt(request.getParameter("partnerCode"));
-		
-		
-		
-		ArrayList<ProfilVo> profil = new ProfilService().selectProfilList(pCode);
 	}
 
 }

@@ -1,12 +1,10 @@
 package ein.mono.member.model.service;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 
 import ein.mono.common.JDBCTemplate;
 import ein.mono.member.model.dao.MemberDao;
 import ein.mono.member.model.vo.MemberVo;
-import ein.mono.profil.model.dao.ProfilDao;
 
 public class MemberService {
 

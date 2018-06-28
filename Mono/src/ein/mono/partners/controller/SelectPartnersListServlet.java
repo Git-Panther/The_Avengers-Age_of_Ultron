@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import ein.mono.common.PageInfo;
 import ein.mono.member.model.vo.MemberVo;
 import ein.mono.partners.model.service.PartnersService;
-import ein.mono.partners.model.vo.PartnersVo;
+import ein.mono.profile.model.vo.ProfileVo;
 
 /**
  * Servlet implementation class SelectPartnersListServlet
@@ -38,8 +38,14 @@ public class SelectPartnersListServlet extends HttpServlet { // 회원이 업체
 		MemberVo member = (MemberVo)request.getSession().getAttribute("member"); // 회원의 정보 기준에 따라 보여줄 것이다.
 		String category = request.getParameter("category"); // 전체, 내 지역, 우수 업체 중 하나
 		PageInfo pageInfo = new PageInfo();
-		ArrayList<PartnersVo> list = new PartnersService().selectPartnersList(member, category);
+		ArrayList<ProfileVo> list = new PartnersService().selectPartnersList(member, category);
 		// 리스트 조건이 무엇이냐에 따라 불러오는 쿼리는 달라진다. 표시하는 방법과 페이징은 같다.
+	
+		if(null != list){ // 성공
+			
+		}else{ // 실패
+			
+		}
 	}
 
 }
