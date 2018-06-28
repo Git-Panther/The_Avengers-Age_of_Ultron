@@ -1,11 +1,15 @@
 package ein.mono.partners.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import ein.mono.partners.model.service.PartnersService;
+import ein.mono.profile.model.vo.ProfileVo;
 
 /**
  * Servlet implementation class SelectPartnerServlet
@@ -29,8 +33,19 @@ public class SelectPartnerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String ptnCode = request.getParameter("partnerCode");
+		ProfileVo ptnProfile = new PartnersService().selectPartner(ptnCode);
+		String url = null;
 		
+		if(null != ptnProfile) {
+			url = "success";
+			// 여기서 경로 조정까지 해주면 완-벽
+			request.setAttribute("ptnProfile", ptnProfile);
+		}else {
+			url = "failed";
+			request.setAttribute("msg", "failed");
+		}
 		
+		request.getRequestDispatcher(url).forward(request, response);
 	}
 
 }

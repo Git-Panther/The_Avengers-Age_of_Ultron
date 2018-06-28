@@ -1,5 +1,6 @@
 package ein.mono.profile.model.vo;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import ein.mono.member.model.vo.MemberVo;
@@ -15,10 +16,10 @@ public class ProfileVo extends MemberVo{
 	private String partnerLocation; //시공지역
 	private String partnerStyles; //스타일
 	private String partnerIntro; //업체소개
-	private String weekdaysStart; // 평일상담시작시간
-	private String weekdaysEnd; // 평일상담종료시간
-	private String weekendStart; // 주말상담시작시간
-	private String weekendEnd; // 주말상담종료시간
+	private Date weekdaysStart; // 평일상담시작시간
+	private Date weekdaysEnd; // 평일상담종료시간
+	private Date weekendStart; // 주말상담시작시간
+	private Date weekendEnd; // 주말상담종료시간
 
 	private HashMap<String, String> ptnUpdates = new HashMap<String, String>();// 추가정보 리스트	
 	private HashMap<String, String> ptnContacts = new HashMap<String, String>();// 연락처
@@ -27,26 +28,6 @@ public class ProfileVo extends MemberVo{
 	private int metascore; // 평점
 	
 	public ProfileVo(){}
-
-
-	public ProfileVo(String partnerCode, String partnerOwner, String partnerCheck, String partnerLicense,
-			String partnerLogo, String partnerLocation, String partnerStyles, String partnerIntro, String weekdaysStart,
-			String weekdaysEnd, String weekendStart, String weekendEnd) {
-		super();
-		this.partnerCode = partnerCode;
-		this.partnerOwner = partnerOwner;
-		this.partnerCheck = partnerCheck;
-		this.partnerLicense = partnerLicense;
-		this.partnerLogo = partnerLogo;
-		this.partnerLocation = partnerLocation;
-		this.partnerStyles = partnerStyles;
-		this.partnerIntro = partnerIntro;
-		this.weekdaysStart = weekdaysStart;
-		this.weekdaysEnd = weekdaysEnd;
-		this.weekendStart = weekendStart;
-		this.weekendEnd = weekendEnd;
-	}
-
 
 	public String getPartnerCode() {
 		return partnerCode;
@@ -128,42 +109,42 @@ public class ProfileVo extends MemberVo{
 	}
 
 
-	public String getWeekdaysStart() {
+	public Date getWeekdaysStart() {
 		return weekdaysStart;
 	}
 
 
-	public void setWeekdaysStart(String weekdaysStart) {
+	public void setWeekdaysStart(Date weekdaysStart) {
 		this.weekdaysStart = weekdaysStart;
 	}
 
 
-	public String getWeekdaysEnd() {
+	public Date getWeekdaysEnd() {
 		return weekdaysEnd;
 	}
 
 
-	public void setWeekdaysEnd(String weekdaysEnd) {
+	public void setWeekdaysEnd(Date weekdaysEnd) {
 		this.weekdaysEnd = weekdaysEnd;
 	}
 
 
-	public String getWeekendStart() {
+	public Date getWeekendStart() {
 		return weekendStart;
 	}
 
 
-	public void setWeekendStart(String weekendStart) {
+	public void setWeekendStart(Date weekendStart) {
 		this.weekendStart = weekendStart;
 	}
 
 
-	public String getWeekendEnd() {
+	public Date getWeekendEnd() {
 		return weekendEnd;
 	}
 
 
-	public void setWeekendEnd(String weekendEnd) {
+	public void setWeekendEnd(Date weekendEnd) {
 		this.weekendEnd = weekendEnd;
 	}
 
