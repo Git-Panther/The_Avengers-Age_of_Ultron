@@ -1,0 +1,26 @@
+@charset "UTF-8";
+.ptnCategory{
+	width:500px;
+	border-top:1px solid #939393;
+	border-bottom:1px solid #939393;
+	float:left;
+	font-size:20px;
+}
+.ptnList *{
+	border:1px solid black;
+}
+
+.constPhoto{
+	width:480px;
+	height:270px;
+}
+
+.pageArea{
+	align:center;
+}
+.searchArea{
+	width:600px;
+	margin-left:auto;
+	margin-right:auto;
+	align:center;
+}

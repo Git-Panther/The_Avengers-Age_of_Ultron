@@ -124,6 +124,10 @@
   function faqPage(){
 	  location.href="/mono/views/faq/faq.jsp";
   }
+  
+  function partnersPage(){
+	  location.href="/mono/selectPartnersListMain.do";
+  }
   </script>
 </head>
 <body>
@@ -145,7 +149,7 @@
 							REQUEST
 							<ul>
 								<li>경매</li>
-								<li>업체지정</li>			
+								<li onclick="partnersPage()">업체지정</li>			
 							</ul>
 						</li>
 						<li>

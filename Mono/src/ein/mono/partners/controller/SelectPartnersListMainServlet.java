@@ -33,18 +33,22 @@ public class SelectPartnersListMainServlet extends HttpServlet { // 회원이 �
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
-		ArrayList<ProfileVo> list = new PartnersService().selectPartnersListMain();
+		PartnersService ps = new PartnersService();
+		
+		ArrayList<ProfileVo> bestList = ps.selectPartnersListMain("best");
+		ArrayList<ProfileVo> list = ps.selectPartnersListMain("all");
 		// 메인 페이지는 앞에서 3개만 프리뷰로 보여준다.
 		String url = null;
 		
-		if(null != list){ // 성공
-			url = "1";
-			response.sendRedirect(url);
+		if(null != list && null != bestList){ // 성공
+			url = "/views/partners/partnerList.jsp";
+			request.setAttribute("bestList", bestList);
+			request.setAttribute("list", list);
+			request.setAttribute("listType", "Main");
 		} else{ // 실패
-			url = "2";
+			url = "/views/partners/partnerList.jsp";
 			request.setAttribute("msg", "업체 지정 메인 페이지 접속 실패");
-			request.getRequestDispatcher(url).forward(request, response);
 		}
-		
+		request.getRequestDispatcher(url).forward(request, response);
 	}
 }

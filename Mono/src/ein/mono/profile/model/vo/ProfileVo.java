@@ -23,7 +23,7 @@ public class ProfileVo extends MemberVo{
 
 	private HashMap<String, String> ptnUpdates = new HashMap<String, String>();// 추가정보 리스트	
 	private HashMap<String, String> ptnContacts = new HashMap<String, String>();// 연락처
-	private HashMap<String, Integer> ptnPhoto = new HashMap<String, Integer>(); // 업체 사진들
+	private HashMap<Integer, String> ptnPhoto = new HashMap<Integer, String>(); // 업체 사진들. Integer는 우선순위, String은 파일명
 	private int favorites; // 즐겨찾기 보유수
 	private int metascore; // 평점
 	
@@ -170,12 +170,12 @@ public class ProfileVo extends MemberVo{
 	}
 
 
-	public HashMap<String, Integer> getPtnPhoto() {
+	public HashMap<Integer, String> getPtnPhoto() {
 		return ptnPhoto;
 	}
 
 
-	public void setPtnPhoto(HashMap<String, Integer> ptnPhoto) {
+	public void setPtnPhoto(HashMap<Integer, String> ptnPhoto) {
 		this.ptnPhoto = ptnPhoto;
 	}
 

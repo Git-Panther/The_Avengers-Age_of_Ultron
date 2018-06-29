@@ -3,10 +3,11 @@ package ein.mono.mypage.model.dao;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import ein.mono.favblock.model.vo.FBVo;
 import ein.mono.report.model.vo.ReportVo;
 
 public class MypageDao {
-	public ArrayList selectFBList(Connection con,String mCode,String fbType){
+	public ArrayList<FBVo> selectFBList(Connection con,String mCode,String fbType){
 		return null;
 	}
 	public int deleteFB(Connection con,String mCode,String tCode, String fbType){

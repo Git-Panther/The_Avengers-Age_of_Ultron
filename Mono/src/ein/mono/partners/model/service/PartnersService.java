@@ -12,10 +12,10 @@ public class PartnersService {
 
 	private PartnersDao partnerDao = new PartnersDao();
 	
-	public ArrayList<ProfileVo> selectPartnersListMain() { // 업체 지정 메인 페이지 한정
+	public ArrayList<ProfileVo> selectPartnersListMain(String type) { // 업체 지정 메인 페이지 한정
 		// TODO Auto-generated method stub
 		Connection con = JDBCTemplate.getConnection();
-		ArrayList<ProfileVo> list = partnerDao.selectPartnersListMain(con);
+		ArrayList<ProfileVo> list = partnerDao.selectPartnersListMain(con, type);
 		JDBCTemplate.close(con); // 자원 반납
 		return list;
 	}
@@ -55,7 +55,7 @@ public class PartnersService {
 			JDBCTemplate.close(con); // 자원 반납
 			return null;
 		}
-		HashMap<String, Integer> ptnPhoto = partnerDao.selectConstPhoto(con, ptnCode);
+		HashMap<Integer, String> ptnPhoto = partnerDao.selectConstPhoto(con, ptnCode);
 		if(null == ptnPhoto){
 			JDBCTemplate.close(con); // 자원 반납
 			return null;

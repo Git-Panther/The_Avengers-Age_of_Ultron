@@ -37,11 +37,11 @@ public class SelectPartnerServlet extends HttpServlet {
 		String url = null;
 		
 		if(null != ptnProfile) {
-			url = "success";
+			url = "/views/partners/partnerProfile.jsp";
 			// 여기서 경로 조정까지 해주면 완-벽
 			request.setAttribute("ptnProfile", ptnProfile);
 		}else {
-			url = "failed";
+			url = "/views/partners/partnerProfile.jsp";
 			request.setAttribute("msg", "failed");
 		}
 		

@@ -72,14 +72,15 @@ public class SearchPartnersListServlet extends HttpServlet { // 회원이 검색
 			ArrayList<ProfileVo> list = new PartnersService().selectPartnersListByKeyword(condition, keyword, currentPage, limit);
 			// 검색 조건이 무엇이냐에 따라 불러오는 쿼리는 달라진다. 표시하는 방법과 페이징은 같다.
 			if(null != list){ // 성공
-				url = "views/board/boardList.jsp";
+				url = "/views/partners/partnerList.jsp";
 				request.setAttribute("list", list);
 				request.setAttribute("pi", pi);
+				request.setAttribute("listType", "Search_"+condition+":"+keyword);
 			}else{ // 실패
-				
+				url = "/views/partners/partnerList.jsp";
 			}
 		} else { // 실패
-			
+			url = "/views/partners/partnerList.jsp";
 		}
 		request.getRequestDispatcher(url).forward(request, response);
 	}

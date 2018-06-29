@@ -32,7 +32,7 @@ public class PartnersDao {
 		}
 	}
 	
-	public ArrayList<ProfileVo> selectPartnersListMain(Connection con) {
+	public ArrayList<ProfileVo> selectPartnersListMain(Connection con, String type) {
 		// TODO Auto-generated method stub
 		ArrayList<ProfileVo> list = null;
 		// 쿼리는 우수 업체 TOP 3, 내 지역에 가까운 업체 이름 오름차순 TOP 3, 전체 리스트 중 이름 오름차순 TOP 3(스타일 TOP 3 할수도) 
@@ -41,25 +41,31 @@ public class PartnersDao {
 		String query = null;
 		try {
 			//1. 쿼리 전송 객체 생성
-			query = prop.getProperty("selectPartnersListMain");
-			pstmt = con.prepareStatement(query);
+			
 			//2. 쿼리 작성
-			pstmt.setString(1, "우수업체");
+			if(type.equals("best")) {
+				query = prop.getProperty("selectPartnersListBest");
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, "우수업체");
+			} else if(type.equals("all")) {
+				query = prop.getProperty("selectPartnersListAll");
+				pstmt = con.prepareStatement(query);
+			}
 			//3. 쿼리 실행
 			rs = pstmt.executeQuery();
 			//4. 결과 처리(resultSet-list parsing)
 			list = new ArrayList<ProfileVo>();
 			ProfileVo temp = null;
-			HashMap<String, Integer> ptnPhoto = null;
+			HashMap<Integer, String> ptnPhoto = null;
 			while(rs.next()){
 				temp = new ProfileVo();
-				ptnPhoto = new HashMap<String, Integer>();
+				ptnPhoto = new HashMap<Integer, String>();
 				temp.setPartnerCode(rs.getString("PTN_CODE"));
-				temp.setMemberName(rs.getString("MEMBER_NAME"));
+				temp.setMemberName(rs.getString("PTN_NAME"));
 				temp.setMemberRank(rs.getString("MEMBER_RANK"));
 				temp.setPartnerLocation(rs.getString("PTN_LOCATION"));
 				temp.setMetascore(rs.getInt("METASCORE"));
-				ptnPhoto.put(rs.getString("PTN_PHOTO"), 0);
+				ptnPhoto.put(0, rs.getString("PTN_PHOTO"));
 				temp.setPtnPhoto(ptnPhoto);
 				temp.setPartnerLogo("PTN_LOGO");
 				list.add(temp);
@@ -86,10 +92,10 @@ public class PartnersDao {
 			query = prop.getProperty("selectPartnersList");
 			switch(category){
 			case "우수업체":
-				query.replaceAll("C1", "WHERE MEMBER RANK = '우수업체'");
+				query = query.replaceAll("C1", "WHERE MEMBER_RANK = '우수업체'");
 				break;
 			default:
-				query.replaceAll("C1", "");
+				query = query.replaceAll("C1", "");
 			}	
 			pstmt = con.prepareStatement(query);
 			//2. 쿼리 작성
@@ -102,16 +108,16 @@ public class PartnersDao {
 			//4. 결과 처리(resultSet-list parsing)
 			list = new ArrayList<ProfileVo>();
 			ProfileVo temp = null;
-			HashMap<String, Integer> ptnPhoto = null;
+			HashMap<Integer, String> ptnPhoto = null;
 			while(rs.next()){
 				temp = new ProfileVo();
-				ptnPhoto = new HashMap<String, Integer>();
+				ptnPhoto = new HashMap<Integer, String>();
 				temp.setPartnerCode(rs.getString("PTN_CODE"));
-				temp.setMemberName(rs.getString("MEMBER_NAME"));
+				temp.setMemberName(rs.getString("PTN_NAME"));
 				temp.setMemberRank(rs.getString("MEMBER_RANK"));
 				temp.setPartnerLocation(rs.getString("PTN_LOCATION"));
 				temp.setMetascore(rs.getInt("METASCORE"));
-				ptnPhoto.put(rs.getString("PTN_PHOTO"), 0);
+				ptnPhoto.put(0, rs.getString("PTN_PHOTO"));
 				temp.setPtnPhoto(ptnPhoto);
 				temp.setPartnerLogo("PTN_LOGO");
 				list.add(temp);
@@ -137,7 +143,7 @@ public class PartnersDao {
 		try {
 			//1. 쿼리 전송 객체 생성
 			query = prop.getProperty("selectPartnersListByKeyword");
-			query.replaceAll("C1", condition); // 지역, 스타일, 업체명 정도만 하는걸로
+			query = query.replaceAll("C1", condition); // 지역, 스타일, 업체명 정도만 하는걸로
 			pstmt = con.prepareStatement(query);
 			//2. 쿼리 작성
 			pstmt.setString(1, "%" + keyword + "%");
@@ -150,16 +156,16 @@ public class PartnersDao {
 			//4. 결과 처리(resultSet-list parsing)
 			list = new ArrayList<ProfileVo>();
 			ProfileVo temp = null;
-			HashMap<String, Integer> ptnPhoto = null;
+			HashMap<Integer, String> ptnPhoto = null;
 			while(rs.next()){
 				temp = new ProfileVo();
-				ptnPhoto = new HashMap<String, Integer>();
+				ptnPhoto = new HashMap<Integer, String>();
 				temp.setPartnerCode(rs.getString("PTN_CODE"));
-				temp.setMemberName(rs.getString("MEMBER_NAME"));
+				temp.setMemberName(rs.getString("PTN_NAME"));
 				temp.setMemberRank(rs.getString("MEMBER_RANK"));
 				temp.setPartnerLocation(rs.getString("PTN_LOCATION"));
 				temp.setMetascore(rs.getInt("METASCORE"));
-				ptnPhoto.put(rs.getString("PTN_PHOTO"), 0);
+				ptnPhoto.put(0, rs.getString("PTN_PHOTO"));
 				temp.setPtnPhoto(ptnPhoto);
 				temp.setPartnerLogo("PTN_LOGO");
 				list.add(temp);
@@ -188,14 +194,14 @@ public class PartnersDao {
 			pstmt.setString(1, ptnCode);
 			//3. 쿼리 실행
 			rs = pstmt.executeQuery();
-			//4. 결과 처리(resultSet-list parsing)
-			ptnProfile = new ProfileVo();
+			//4. 결과 처리(resultSet-list parsing). 참고로 한 가지의 결과만 나온다.
 			while(rs.next()){
+				ptnProfile = new ProfileVo();
 				ptnProfile.setPartnerLogo(rs.getString("PTN_LOGO"));
 				ptnProfile.setPartnerCode(rs.getString("PTN_CODE"));
 				ptnProfile.setMetascore(rs.getInt("METASCORE"));
 				ptnProfile.setFavorites(rs.getInt("FAVCOUNT"));
-				ptnProfile.setMemberName(rs.getString("MEMBER_NAME"));
+				ptnProfile.setMemberName(rs.getString("PTN_NAME"));
 				ptnProfile.setMemberRank(rs.getString("MEMBER_RANK"));
 				ptnProfile.setPartnerLocation(rs.getString("PTN_LOCATION"));
 				ptnProfile.setPartnerStyles(rs.getString("PTN_STYLES"));
@@ -274,8 +280,8 @@ public class PartnersDao {
 		return ptnUpdates;
 	}
 	
-	public HashMap<String, Integer> selectConstPhoto(Connection con, String ptnCode) {
-		HashMap<String, Integer> ptnPhoto = null;
+	public HashMap<Integer, String> selectConstPhoto(Connection con, String ptnCode) {
+		HashMap<Integer, String> ptnPhoto = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String query = null;
@@ -288,9 +294,9 @@ public class PartnersDao {
 			//3. 쿼리 실행
 			rs = pstmt.executeQuery();
 			//4. 결과 처리(resultSet-list parsing)
-			ptnPhoto = new HashMap<String, Integer>();
+			ptnPhoto = new HashMap<Integer, String>();
 			while(rs.next()){
-				ptnPhoto.put(rs.getString("PTN_PHOTO"), rs.getInt("PTN_PHOTO_NUM"));
+				ptnPhoto.put(rs.getInt("PTN_PHOTO_NUM"), rs.getString("PTN_PHOTO"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -313,14 +319,16 @@ public class PartnersDao {
 			query = prop.getProperty("selectPartnersTotalCount");
 			switch(category){
 			case "우수업체":
-				query.replaceAll("C1", "WHERE MEMBER_RANK = '우수업체'");
+				query = query.replaceAll("C1", "WHERE MEMBER_RANK = '우수업체'");
 				break;
 			default:
-				query.replaceAll("C1", "");
+				query = query.replaceAll("C1", "");
 			}
 			pstmt = con.prepareStatement(query);
 			rs = pstmt.executeQuery();
-			partnerCount = rs.getInt("PARTNERCOUNT");
+			while(rs.next()){
+				partnerCount = rs.getInt("PARTNERCOUNT");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -339,12 +347,14 @@ public class PartnersDao {
 		String query = null;
 		try {
 			query = prop.getProperty("selectPartnersTotalCount");
-			query.replaceAll("C1", "WHERE " + condition + " LIKE ?"); // 지역, 스타일, 업체명 정도만 하는걸로
+			query = query.replaceAll("C1", "WHERE " + condition.toUpperCase() + " LIKE ?"); // 지역, 스타일, 업체명 정도만 하는걸로
 			pstmt = con.prepareStatement(query);
 			//2. 쿼리 작성
 			pstmt.setString(1, "%" + keyword + "%");
 			rs = pstmt.executeQuery();
-			partnerCount = rs.getInt("PARTNERCOUNT");
+			while(rs.next()){
+				partnerCount = rs.getInt("PARTNERCOUNT");
+			}	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
