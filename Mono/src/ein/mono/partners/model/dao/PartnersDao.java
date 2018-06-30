@@ -64,9 +64,10 @@ public class PartnersDao {
 				temp.setMemberName(rs.getString("PTN_NAME"));
 				temp.setMemberRank(rs.getString("MEMBER_RANK"));
 				temp.setPartnerLocation(rs.getString("PTN_LOCATION"));
-				temp.setMetascore(rs.getInt("METASCORE"));
+				temp.setMetascore(rs.getDouble("METASCORE"));
 				ptnPhoto.put(0, rs.getString("PTN_PHOTO"));
 				temp.setPtnPhoto(ptnPhoto);
+				temp.setPartnerStyles(rs.getString("PTN_STYLES"));
 				temp.setPartnerLogo("PTN_LOGO");
 				list.add(temp);
 			}
@@ -92,10 +93,10 @@ public class PartnersDao {
 			query = prop.getProperty("selectPartnersList");
 			switch(category){
 			case "우수업체":
-				query = query.replaceAll("C1", "WHERE MEMBER_RANK = '우수업체'");
+				query = query.replaceAll("C1", "WHERE MEMBER_RANK = '우수업체' ORDER BY METASCORE DESC");
 				break;
 			default:
-				query = query.replaceAll("C1", "");
+				query = query.replaceAll("C1", "ORDER BY MEMBER_JDATE DESC");
 			}	
 			pstmt = con.prepareStatement(query);
 			//2. 쿼리 작성
@@ -116,9 +117,10 @@ public class PartnersDao {
 				temp.setMemberName(rs.getString("PTN_NAME"));
 				temp.setMemberRank(rs.getString("MEMBER_RANK"));
 				temp.setPartnerLocation(rs.getString("PTN_LOCATION"));
-				temp.setMetascore(rs.getInt("METASCORE"));
+				temp.setMetascore(rs.getDouble("METASCORE"));
 				ptnPhoto.put(0, rs.getString("PTN_PHOTO"));
 				temp.setPtnPhoto(ptnPhoto);
+				temp.setPartnerStyles(rs.getString("PTN_STYLES"));
 				temp.setPartnerLogo("PTN_LOGO");
 				list.add(temp);
 			}
@@ -146,7 +148,7 @@ public class PartnersDao {
 			query = query.replaceAll("C1", condition); // 지역, 스타일, 업체명 정도만 하는걸로
 			pstmt = con.prepareStatement(query);
 			//2. 쿼리 작성
-			pstmt.setString(1, "%" + keyword + "%");
+			pstmt.setString(1, "%" + keyword.toLowerCase() + "%");
 			int startRow = (currentPage - 1) * limit + 1; 
 			int endRow = startRow + limit - 1;	
 			pstmt.setInt(2, startRow);
@@ -164,9 +166,10 @@ public class PartnersDao {
 				temp.setMemberName(rs.getString("PTN_NAME"));
 				temp.setMemberRank(rs.getString("MEMBER_RANK"));
 				temp.setPartnerLocation(rs.getString("PTN_LOCATION"));
-				temp.setMetascore(rs.getInt("METASCORE"));
+				temp.setMetascore(rs.getDouble("METASCORE"));
 				ptnPhoto.put(0, rs.getString("PTN_PHOTO"));
 				temp.setPtnPhoto(ptnPhoto);
+				temp.setPartnerStyles(rs.getString("PTN_STYLES"));
 				temp.setPartnerLogo("PTN_LOGO");
 				list.add(temp);
 			}
@@ -199,17 +202,17 @@ public class PartnersDao {
 				ptnProfile = new ProfileVo();
 				ptnProfile.setPartnerLogo(rs.getString("PTN_LOGO"));
 				ptnProfile.setPartnerCode(rs.getString("PTN_CODE"));
-				ptnProfile.setMetascore(rs.getInt("METASCORE"));
+				ptnProfile.setMetascore(rs.getDouble("METASCORE"));
 				ptnProfile.setFavorites(rs.getInt("FAVCOUNT"));
 				ptnProfile.setMemberName(rs.getString("PTN_NAME"));
 				ptnProfile.setMemberRank(rs.getString("MEMBER_RANK"));
 				ptnProfile.setPartnerLocation(rs.getString("PTN_LOCATION"));
 				ptnProfile.setPartnerStyles(rs.getString("PTN_STYLES"));
 				ptnProfile.setPartnerIntro(rs.getString("PTN_INTRO"));
-				ptnProfile.setWeekdaysStart(rs.getDate("WEEKDAYS_START"));
-				ptnProfile.setWeekdaysEnd(rs.getDate("WEEKDAYS_END"));
-				ptnProfile.setWeekendStart(rs.getDate("WEEKEND_START"));
-				ptnProfile.setWeekendEnd(rs.getDate("WEEKEND_END"));
+				ptnProfile.setWeekdaysStart(rs.getString("WEEKDAYS_START"));
+				ptnProfile.setWeekdaysEnd(rs.getString("WEEKDAYS_END"));
+				ptnProfile.setWeekendStart(rs.getString("WEEKEND_START"));
+				ptnProfile.setWeekendEnd(rs.getString("WEEKEND_END"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

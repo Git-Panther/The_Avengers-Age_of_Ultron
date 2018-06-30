@@ -13,7 +13,7 @@
 	Iterator<ProfileVo> itrList = null;
 	ProfileVo ptnPreview = null;
 	String condition = null; // 표시 조건	
-	int listIndex = 0; // 화면에 표시되는 리스트 인덱스
+	//int listIndex = 0; // 화면에 표시되는 리스트 인덱스
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -44,39 +44,46 @@
 			location.href="/mono/selectPartnersList.do?category="+category+"&currentPage=" + pageNum;
 		<%}%>
 	}
+	
+	function selectPartner(partnerCode){
+		location.href = "/mono/selectPartner.do?partnerCode="+partnerCode;
+	}
+	
+	$(function(){
+		
+	});
 </script>
 </head>
 <body>
+<div class="ptnListArea">
 <%if(null != list){	%>
-	<h1>success : <%=listType%>, size : <%=list.size()%></h1>
 	<%if(listType.contains("Main")){%>
-	<div class="ptnCategory">우수 업체</div>
+	<div class="ptnCategory"><a href="/mono/selectPartnersList.do?category=우수업체">우수 업체</a></div><br><br>
 	<%
 	ArrayList<ProfileVo> bestList = (ArrayList<ProfileVo>)request.getAttribute("bestList");
 	if(0 != bestList.size()){
-	%>
-	<table class="ptnList">
-		<tr>
-		<%
 		itrList = bestList.iterator();
 		while(itrList.hasNext()){
 			ptnPreview = itrList.next();
-		%>			
-			<td>
-				<img class="constPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>">
-				<br/>
-				<%=ptnPreview.getMemberName()%>|<%=ptnPreview.getPartnerLocation()%>|<%=ptnPreview.getMetascore()%>
-			</td>
-		<%		
-		}
-		%>
-		</tr>
-	</table>
-	<%}else{%>
+	%>
+		<div class="ptnList">
+			<table>
+				<tr>	
+					<td colspan="4">
+						<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnListPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>				
+					</td>
+				</tr>
+				<tr>
+					<td><%=ptnPreview.getMemberName()%></td><td><%=ptnPreview.getPartnerLocation()%></td><td><%=ptnPreview.getPartnerStyles()%></td><td>★<%=Math.floor(ptnPreview.getMetascore()*10)/10%></td>
+				</tr>
+			</table>
+		</div>
+	<%}
+	}else{%>
 	<br>
 	<h1>검색결과가 존재하지 않습니다.</h1>
 	<%}%>
-	<div class="ptnCategory">전체</div>
+	<br><div class="ptnCategory"><a href="/mono/selectPartnersList.do?category=All">전체</a></div><br><br>
 	<%}else if(listType.contains("Search")){
 		String listInfo = listType.replace("Search_", "");
 		if(listInfo.contains("ptn_name")) {
@@ -90,36 +97,32 @@
 			condition = "스타일";
 		}
 	%>
-	<div class="ptnCategory">검색 결과(<%=condition+listInfo%>)</div>
+	<div class="ptnCategory">검색 결과(<%=condition+listInfo%>)</div><br><br>
 	<%}else if(listType.contains("Category")){
 		if(listType.contains("All")) condition = "전체";
 		else if(listType.contains("우수업체")) condition = "우수 업체";
 	%>
-	<div class="ptnCategory"><%=condition%></div>	
+	<div class="ptnCategory"><%=condition%></div><br><br>
 	<%} 
-	if(0 != list.size()){
-	%>
-	<table class="ptnList">	
-		<%		
+	if(0 != list.size()){	
 		itrList = list.iterator();
 		while(itrList.hasNext()){
 			ptnPreview = itrList.next();
-			listIndex++;
-			if(1 == listIndex%3){
-		%>
-		<tr>
-		<%} %>
-			<td>
-				<img class="constPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>">
-				<br/>
-				<%=ptnPreview.getMemberName()%>|<%=ptnPreview.getPartnerLocation()%>|<%=ptnPreview.getMetascore()%>
-			</td>
-			<%if((0 == listIndex%3) || (listIndex == list.size())){%>
-				</tr>
-			<%} %>
-		<%}%>
-	</table>
-	<%}else{%>
+	%>
+	<div class="ptnList">
+		<table>
+			<tr>	
+				<td colspan="4">
+					<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnListPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>	
+				</td>
+			</tr>
+			<tr>
+				<td><%=ptnPreview.getMemberName()%></td><td><%=ptnPreview.getPartnerLocation()%></td><td><%=ptnPreview.getPartnerStyles()%></td><td>★<%=Math.floor(ptnPreview.getMetascore()*10)/10%></td>
+			</tr>
+		</table>
+	</div>
+	<%}
+	}else{%>
 	<br>
 	<h1>검색결과가 존재하지 않습니다.</h1>
 	<%} %>
@@ -151,19 +154,21 @@
 		<input type="text" id="searchText" placeholder="검색어 입력"/>
 		<input type="button" value="검색하기" onclick="searchPartners();"/>
 	</div>
-	<br><br>
-	<a href="/mono/selectPartnersList.do?category=우수업체">Category : Best</a><br/>
-	<a href="/mono/selectPartnersList.do?category=All">Category : All</a><br/>
-	<a href="/mono/searchPartnersList.do?condition=ptn_name&keyword=sucks">Search : Partner's name = sucks</a><br/>
-	<a href="/mono/searchPartnersList.do?condition=ptn_location&keyword=강남">Search : Partner's location = 강남</a><br/>
-	<a href="/mono/searchPartnersList.do?condition=ptn_styles&keyword=모던">Search : Partner's style = 모던</a><br/>
-	<a href="/mono/selectPartner.do?partnerCode=C1">상세보기 : C1 업체</a>
+</div>
 <script>
 	function searchPartners(){
 		var condition = $("#searchCondition").val();
 		var keyword = $("#searchText").val();
 		location.href = "/mono/searchPartnersList.do?condition="+condition+"&keyword="+keyword;
 	}
+	
+	$(function(){
+		$("#searchText").keyup(function (key) {		 
+	        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+	        	searchPartners();
+	        }
+	    });
+	});
 </script>
 </body>
 </html>

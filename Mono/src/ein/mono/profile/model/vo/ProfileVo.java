@@ -1,6 +1,5 @@
 package ein.mono.profile.model.vo;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import ein.mono.member.model.vo.MemberVo;
@@ -16,16 +15,16 @@ public class ProfileVo extends MemberVo{
 	private String partnerLocation; //시공지역
 	private String partnerStyles; //스타일
 	private String partnerIntro; //업체소개
-	private Date weekdaysStart; // 평일상담시작시간
-	private Date weekdaysEnd; // 평일상담종료시간
-	private Date weekendStart; // 주말상담시작시간
-	private Date weekendEnd; // 주말상담종료시간
+	private String weekdaysStart; // 평일상담시작시간
+	private String weekdaysEnd; // 평일상담종료시간
+	private String weekendStart; // 주말상담시작시간
+	private String weekendEnd; // 주말상담종료시간
 
 	private HashMap<String, String> ptnUpdates = new HashMap<String, String>();// 추가정보 리스트	
 	private HashMap<String, String> ptnContacts = new HashMap<String, String>();// 연락처
 	private HashMap<Integer, String> ptnPhoto = new HashMap<Integer, String>(); // 업체 사진들. Integer는 우선순위, String은 파일명
 	private int favorites; // 즐겨찾기 보유수
-	private int metascore; // 평점
+	private double metascore; // 평점
 	
 	public ProfileVo(){}
 
@@ -109,42 +108,41 @@ public class ProfileVo extends MemberVo{
 	}
 
 
-	public Date getWeekdaysStart() {
+	public String getWeekdaysStart() {
 		return weekdaysStart;
 	}
 
 
-	public void setWeekdaysStart(Date weekdaysStart) {
+	public void setWeekdaysStart(String weekdaysStart) {
 		this.weekdaysStart = weekdaysStart;
 	}
 
 
-	public Date getWeekdaysEnd() {
+	public String getWeekdaysEnd() {
 		return weekdaysEnd;
 	}
 
 
-	public void setWeekdaysEnd(Date weekdaysEnd) {
+	public void setWeekdaysEnd(String weekdaysEnd) {
 		this.weekdaysEnd = weekdaysEnd;
 	}
 
 
-	public Date getWeekendStart() {
+	public String getWeekendStart() {
 		return weekendStart;
 	}
 
 
-	public void setWeekendStart(Date weekendStart) {
+	public void setWeekendStart(String weekendStart) {
 		this.weekendStart = weekendStart;
 	}
 
-
-	public Date getWeekendEnd() {
+	public String getWeekendEnd() {
 		return weekendEnd;
 	}
 
 
-	public void setWeekendEnd(Date weekendEnd) {
+	public void setWeekendEnd(String weekendEnd) {
 		this.weekendEnd = weekendEnd;
 	}
 
@@ -190,12 +188,12 @@ public class ProfileVo extends MemberVo{
 	}
 
 
-	public int getMetascore() {
+	public double getMetascore() {
 		return metascore;
 	}
 
 
-	public void setMetascore(int metascore) {
+	public void setMetascore(double metascore){
 		this.metascore = metascore;
 	}
 
