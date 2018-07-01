@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.ptnLogo{
+	width:200px;
+	height:200px;
+}
+
+#mainPhoto{
+	width:320px;
+	height:180px;
+}
+
+.photoThumnail{
+	width:64px;
+	height:36px;
+}
+
+.photoThumnail:hover:not(.blank){
+	cursor:pointer;
+}
+
+.blank{
+	border: 1px solid black;
+}

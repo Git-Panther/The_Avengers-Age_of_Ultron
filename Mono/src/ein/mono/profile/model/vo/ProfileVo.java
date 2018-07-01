@@ -1,5 +1,6 @@
 package ein.mono.profile.model.vo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ein.mono.member.model.vo.MemberVo;
@@ -20,8 +21,8 @@ public class ProfileVo extends MemberVo{
 	private String weekendStart; // 주말상담시작시간
 	private String weekendEnd; // 주말상담종료시간
 
-	private HashMap<String, String> ptnUpdates = new HashMap<String, String>();// 추가정보 리스트	
-	private HashMap<String, String> ptnContacts = new HashMap<String, String>();// 연락처
+	private ArrayList<PtnUpdate> ptnUpdates = new ArrayList<PtnUpdate>();// 추가정보 리스트	
+	private ArrayList<PtnContact> ptnContacts = new ArrayList<PtnContact>();// 연락처 리스트
 	private HashMap<Integer, String> ptnPhoto = new HashMap<Integer, String>(); // 업체 사진들. Integer는 우선순위, String은 파일명
 	private int favorites; // 즐겨찾기 보유수
 	private double metascore; // 평점
@@ -148,22 +149,22 @@ public class ProfileVo extends MemberVo{
 
 	
 	
-	public HashMap<String, String> getPtnUpdates() {
+	public ArrayList<PtnUpdate> getPtnUpdates() {
 		return ptnUpdates;
 	}
 
 
-	public void setPtnUpdates(HashMap<String, String> ptnUpdates) {
+	public void setPtnUpdates(ArrayList<PtnUpdate> ptnUpdates) {
 		this.ptnUpdates = ptnUpdates;
 	}
 
 
-	public HashMap<String, String> getPtnContacts() {
+	public ArrayList<PtnContact> getPtnContacts() {
 		return ptnContacts;
 	}
 
 
-	public void setPtnContacts(HashMap<String, String> ptnContacts) {
+	public void setPtnContacts(ArrayList<PtnContact> ptnContacts) {
 		this.ptnContacts = ptnContacts;
 	}
 

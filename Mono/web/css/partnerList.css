@@ -6,23 +6,23 @@
 	float:left;
 	font-size:20px;
 }
-.ptnList table{
+.ptnPreview table{
 	border:1px solid black;
 	align:center;
 	text-align:center;
 }
 
-.ptnList table td{
+.ptnPreview table td{
 	align:center;
 	text-align:center;
 }
 
-.ptnList{
+.ptnPreview{
 	width:560px;
 	height:315px;
 }
 
-.ptnListPhoto{
+.ptnPreviewPhoto{
 	width:480px;
 	height:270px;
 }
@@ -45,6 +45,6 @@
 	align:center;
 }
 
-.ptnListPhoto:hover{
+.ptnPreviewPhoto:hover{
 	cursor:pointer;
 }

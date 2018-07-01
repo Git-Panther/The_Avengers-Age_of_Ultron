@@ -59,30 +59,35 @@
 <%if(null != list){	%>
 	<%if(listType.contains("Main")){%>
 	<div class="ptnCategory"><a href="/mono/selectPartnersList.do?category=우수업체">우수 업체</a></div><br><br>
-	<%
-	ArrayList<ProfileVo> bestList = (ArrayList<ProfileVo>)request.getAttribute("bestList");
-	if(0 != bestList.size()){
-		itrList = bestList.iterator();
-		while(itrList.hasNext()){
-			ptnPreview = itrList.next();
-	%>
-		<div class="ptnList">
-			<table>
-				<tr>	
-					<td colspan="4">
-						<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnListPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>				
-					</td>
-				</tr>
-				<tr>
-					<td><%=ptnPreview.getMemberName()%></td><td><%=ptnPreview.getPartnerLocation()%></td><td><%=ptnPreview.getPartnerStyles()%></td><td>★<%=Math.floor(ptnPreview.getMetascore()*10)/10%></td>
-				</tr>
-			</table>
-		</div>
+	<table>
+		<tr>
+			<%
+			ArrayList<ProfileVo> bestList = (ArrayList<ProfileVo>)request.getAttribute("bestList");
+			if(0 != bestList.size()){
+				itrList = bestList.iterator();
+				while(itrList.hasNext()){
+					ptnPreview = itrList.next();
+			%>
+			<td>
+			<div class="ptnPreview">	
+				<table>
+					<tr>	
+						<td colspan="4">
+							<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnPreviewPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>				
+						</td>
+					</tr>
+					<tr>
+						<td><%=ptnPreview.getMemberName()%></td><td><%=ptnPreview.getPartnerLocation()%></td><td><%=ptnPreview.getPartnerStyles()%></td><td>★<%=Math.floor(ptnPreview.getMetascore()*10)/10%></td>
+					</tr>
+				</table>
+			</div>
+			</td>
 	<%}
 	}else{%>
-	<br>
-	<h1>검색결과가 존재하지 않습니다.</h1>
+	<td><h1>검색결과가 존재하지 않습니다.</h1></td>
 	<%}%>
+		</tr>
+	</table>	
 	<br><div class="ptnCategory"><a href="/mono/selectPartnersList.do?category=All">전체</a></div><br><br>
 	<%}else if(listType.contains("Search")){
 		String listInfo = listType.replace("Search_", "");
@@ -109,11 +114,11 @@
 		while(itrList.hasNext()){
 			ptnPreview = itrList.next();
 	%>
-	<div class="ptnList">
+	<div class="ptnPreview">
 		<table>
 			<tr>	
 				<td colspan="4">
-					<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnListPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>	
+					<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnPreviewPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>	
 				</td>
 			</tr>
 			<tr>

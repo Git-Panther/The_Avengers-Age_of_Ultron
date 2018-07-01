@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import ein.mono.common.JDBCTemplate;
 import ein.mono.profile.model.vo.ProfileVo;
+import ein.mono.profile.model.vo.PtnContact;
+import ein.mono.profile.model.vo.PtnUpdate;
 import ein.mono.request.model.dao.RequestDao;
 
 public class PartnersDao {
@@ -225,8 +227,8 @@ public class PartnersDao {
 		return ptnProfile;
 	}
 	
-	public HashMap<String, String> selectPartnerContact(Connection con, String ptnCode) {
-		HashMap<String, String> ptnContacts = null;
+	public ArrayList<PtnContact> selectPartnerContact(Connection con, String ptnCode) {
+		ArrayList<PtnContact> ptnContacts = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String query = null;
@@ -239,9 +241,14 @@ public class PartnersDao {
 			//3. 쿼리 실행
 			rs = pstmt.executeQuery();
 			//4. 결과 처리(resultSet-list parsing)
-			ptnContacts = new HashMap<String, String>();
+			ptnContacts = new ArrayList<PtnContact>();
+			PtnContact temp = null;
 			while(rs.next()){
-				ptnContacts.put(rs.getString("CONTACT_TYPE"), rs.getString("CONTACT_INFO"));
+				temp = new PtnContact();
+				temp.setContactCode(rs.getString("CONTACT_CODE"));
+				temp.setContactType(rs.getString("CONTACT_TYPE"));
+				temp.setContactInfo(rs.getString("CONTACT_INFO"));
+				ptnContacts.add(temp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -254,8 +261,8 @@ public class PartnersDao {
 		return ptnContacts;
 	}
 	
-	public HashMap<String, String> selectPartnerUpdate(Connection con, String ptnCode) {
-		HashMap<String, String> ptnUpdates = null;
+	public ArrayList<PtnUpdate> selectPartnerUpdate(Connection con, String ptnCode) {
+		ArrayList<PtnUpdate> ptnUpdates = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String query = null;
@@ -268,9 +275,14 @@ public class PartnersDao {
 			//3. 쿼리 실행
 			rs = pstmt.executeQuery();
 			//4. 결과 처리(resultSet-list parsing)
-			ptnUpdates = new HashMap<String, String>();
+			ptnUpdates = new ArrayList<PtnUpdate>();
+			PtnUpdate temp = null;
 			while(rs.next()){
-				ptnUpdates.put(rs.getString("UPDATE_NAME"), rs.getString("UPDATE_CONTENT"));
+				temp = new PtnUpdate();
+				temp.setUpdateCode(rs.getString("UPDATE_CODE"));
+				temp.setUpdateName(rs.getString("UPDATE_NAME"));
+				temp.setUpdateContent(rs.getString("UPDATE_CONTENT"));
+				ptnUpdates.add(temp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -366,5 +378,32 @@ public class PartnersDao {
 			JDBCTemplate.close(pstmt);
 		}		
 		return partnerCount;
+	}
+
+	public int selectFavPtnCount(Connection con, String memberCode, String partnerCode) {
+		// TODO Auto-generated method stub
+		int favPtnCount = -1;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String query = null;
+		try {
+			query = prop.getProperty("selectFavPtnCount");
+			pstmt = con.prepareStatement(query);
+			//2. 쿼리 작성
+			pstmt.setString(1, memberCode);
+			pstmt.setString(2, partnerCode);
+			pstmt.setString(3, "즐겨찾기");
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				favPtnCount = rs.getInt("FAVPTNCOUNT");
+			}	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+		}		
+		return favPtnCount;
 	}
 }

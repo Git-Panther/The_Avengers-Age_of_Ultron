@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="ein.mono.profile.model.vo.ProfileVo"%>
+<%@ page import="java.util.*"%>
+<%@ page import="ein.mono.profile.model.vo.*"%>
 <%@ page import="ein.mono.member.model.vo.*"%>
 <%@ include file="/views/common/header.jsp" %>
 <%@ include file="/views/common/footer.jsp" %>
@@ -18,18 +19,16 @@
 </script>
 </head>
 <body>
-<%if(null != ptnProfile){%>
+<%if(null != ptnProfile){
+	HashMap<Integer, String> ptnPhoto = ptnProfile.getPtnPhoto();
+%>
 <div class="aside">
-	<img alt="none" src="/mono/upload/partner_logo/<%=ptnProfile.getPartnerLogo()%>"><br>
+	<img class="ptnLogo" alt="none" src="/mono/upload/partner_logo/<%=ptnProfile.getPartnerLogo()%>"><br>
 	<div class="ptnBtn">★<%=Math.floor(ptnProfile.getMetascore()*10)/10%></div>
-	<div class="ptnBtn" id="favBtn">즐겨찾기
-	<%if(null != user){ // 그리고 ajax로 관계 있는지 확인%>
-	♥
-	<%}else{%>
-	♡
-	<%}%><%=ptnProfile.getFavorites()%>
-	</div>
+	<%if((null == user) || (null != user && user.getMemberCode().charAt(0) != 'C')){%>
+	<div class="ptnBtn" id="favBtn"></div>
 	<div class="ptnBtn" id="reqBtn">견적 신청</div>
+	<%}%>
 	<%if(null != user && user.getMemberCode().equals(ptnProfile.getPartnerCode())){%>
 	<div class="ptnBtn" id="updatePtnBtn">정보 수정</div>
 	<%}%>
@@ -37,13 +36,18 @@
 <div class="ptnPhotoList">
 	<table>
 		<tr>
-			<td colspan="4"><img id="mainPhoto" alt="none" src="/mono/upload/const_photo/"></td>
+			<td colspan="4"><img id="mainPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPhoto.get(0)%>"></td>
 		</tr>
 		<tr>
-			<td><img id="photoThumnail" alt="none" src="/mono/upload/const_photo/"></td>
-			<td><img id="photoThumnail" alt="none" src="/mono/upload/const_photo/"></td>
-			<td><img id="photoThumnail" alt="none" src="/mono/upload/const_photo/"></td>
-			<td><img id="photoThumnail" alt="none" src="/mono/upload/const_photo/"></td>
+			<%for(int index = 0; index < 4; index++){%>
+				<td>
+				<%if(ptnPhoto.size() > index){%>
+				<img class="photoThumnail" alt="none" src="/mono/upload/const_photo/<%=ptnPhoto.get(index)%>"/>
+				<%}else{%>
+				<div class="photoThumnail blank"></div>
+				<%}%>
+				</td>
+			<%}%>
 		</tr>
 	</table>
 </div>
@@ -80,8 +84,35 @@
 		</tr>
 	</table>
 </div>
-<%}else{%>
-	<h1>Not found</h1>
 <%}%>
+<script>
+	$(function(){
+		<%if(null != ptnProfile && null != user && user.getMemberCode().charAt(0) != 'C'){ // 로그인 중이고 업체 아니면 검사%>
+			$.ajax({
+				 url : "/mono/checkFavPtn.do"
+				 , type : "post"
+				 , data : {memberCode : <%=user.getMemberCode()%>, partnerCode : <%=ptnProfile.getPartnerCode()%>}
+				 , success : function(data){
+					 var content = "즐겨찾기 ";
+					if(data == "true"){
+						content += "♥";
+					}else{
+						content += "♡";
+					}
+					content += "<%=ptnProfile.getFavorites()%>";
+					$("#favBtn").text(content);
+				 }
+				 , error : function(e){
+					 console.log(e, "failed.");
+				 }
+				 , complete : function(data){
+					 console.log(data, "아무튼 처리됨");
+				 }
+			 });
+		<%}else{%>
+			$("#favBtn").text("즐겨찾기 ♡<%=ptnProfile.getFavorites()%>");
+		<%}%>
+	});
+</script>
 </body>
 </html>

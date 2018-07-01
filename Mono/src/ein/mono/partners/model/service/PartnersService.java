@@ -7,6 +7,8 @@ import java.util.HashMap;
 import ein.mono.common.JDBCTemplate;
 import ein.mono.partners.model.dao.PartnersDao;
 import ein.mono.profile.model.vo.ProfileVo;
+import ein.mono.profile.model.vo.PtnContact;
+import ein.mono.profile.model.vo.PtnUpdate;
 
 public class PartnersService {
 
@@ -45,12 +47,12 @@ public class PartnersService {
 			JDBCTemplate.close(con); // 자원 반납
 			return null;
 		}
-		HashMap<String, String> ptnContacts = partnerDao.selectPartnerContact(con, ptnCode);
+		ArrayList<PtnContact> ptnContacts = partnerDao.selectPartnerContact(con, ptnCode);
 		if(null == ptnContacts){
 			JDBCTemplate.close(con); // 자원 반납
 			return null;
 		}
-		HashMap<String, String> ptnUpdate = partnerDao.selectPartnerUpdate(con, ptnCode);
+		ArrayList<PtnUpdate> ptnUpdate = partnerDao.selectPartnerUpdate(con, ptnCode);
 		if(null == ptnUpdate){
 			JDBCTemplate.close(con); // 자원 반납
 			return null;
@@ -91,6 +93,19 @@ public class PartnersService {
 		JDBCTemplate.close(con);
 		//결과 반환
 		return listCount;
+	}
+
+	public boolean hasFavPtn(String memberCode, String partnerCode) {
+		// TODO Auto-generated method stub
+		//커넥션 생성
+		Connection con = JDBCTemplate.getConnection();
+		//비지니스 로직 호출
+		int favPtnCount = partnerDao.selectFavPtnCount(con, memberCode, partnerCode);
+		//자원 반납(close)
+		JDBCTemplate.close(con);
+		//결과 반환
+		if(favPtnCount == 1) return true;
+		else return false;
 	}
 
 }
