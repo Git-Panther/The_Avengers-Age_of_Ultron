@@ -14,7 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/mono/css/partnerProfile.css" type="text/css"/>
+<link rel="stylesheet" href="/mono/css/partnerProfile.css?ver=2" type="text/css"/>
 <script type="text/javascript" src="/mono/js/jquery-3.3.1.min.js">
 </script>
 </head>
@@ -80,8 +80,33 @@
 		</tr>
 		<tr>
 			<td>문의</td>
-			<td>?</td>
+			<td>
+			<% 
+				ArrayList<PtnContact> ptnContacts = ptnProfile.getPtnContacts();
+				if(0 < ptnContacts.size()){
+					for(PtnContact contact : ptnContacts){
+			%>
+				<%=contact.getContactType()%> : <%=contact.getContactInfo()%><br>
+			<%		}
+				}else{
+			%>
+				연락처 정보가 존재하지 않습니다.
+			<%	}%>
+			</td>
 		</tr>
+		<%
+			ArrayList<PtnUpdate> ptnUpdates = ptnProfile.getPtnUpdates();
+			if(0 < ptnUpdates.size()){
+				for(PtnUpdate updateInfo : ptnUpdates){
+		%>
+		<tr>
+			<td><%=updateInfo.getUpdateName()%></td>
+			<td><%=updateInfo.getUpdateContent()%></td>
+		</tr>	
+		<%
+				}
+			}
+		%>
 	</table>
 </div>
 <%}%>

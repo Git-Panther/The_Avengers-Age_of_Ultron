@@ -21,7 +21,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/mono/css/partnerList.css" type="text/css"/>
+<link rel="stylesheet" href="/mono/css/partnerList.css?ver=1" type="text/css"/>
 <script type="text/javascript" src="/mono/js/jquery-3.3.1.min.js">
 	function movePage(pageNum){ // 여기부터 시작
 		<%if(listType.contains("Search")){%>
@@ -108,29 +108,43 @@
 		else if(listType.contains("우수업체")) condition = "우수 업체";
 	%>
 	<div class="ptnCategory"><%=condition%></div><br><br>
-	<%} 
-	if(0 != list.size()){	
-		itrList = list.iterator();
-		while(itrList.hasNext()){
-			ptnPreview = itrList.next();
-	%>
-	<div class="ptnPreview">
-		<table>
-			<tr>	
-				<td colspan="4">
-					<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnPreviewPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>	
-				</td>
-			</tr>
-			<tr>
-				<td><%=ptnPreview.getMemberName()%></td><td><%=ptnPreview.getPartnerLocation()%></td><td><%=ptnPreview.getPartnerStyles()%></td><td>★<%=Math.floor(ptnPreview.getMetascore()*10)/10%></td>
-			</tr>
-		</table>
-	</div>
 	<%}
-	}else{%>
-	<br>
-	<h1>검색결과가 존재하지 않습니다.</h1>
-	<%} %>
+		int colCount = 0;
+	%>
+	<table>
+		<%
+		if(0 != list.size()){	
+			itrList = list.iterator();
+			while(itrList.hasNext()){
+				if(0 == colCount % 3){
+		%><tr>
+		<%
+				}
+				ptnPreview = itrList.next();
+		%>
+			<td>
+				<div class="ptnPreview">
+					<table>
+						<tr>	
+							<td colspan="4">
+								<a href="/mono/selectPartner.do?partnerCode=<%=ptnPreview.getPartnerCode()%>"><img class="ptnPreviewPhoto" alt="none" src="/mono/upload/const_photo/<%=ptnPreview.getPtnPhoto().get(0)%>"></a>	
+							</td>
+						</tr>
+						<tr>
+							<td><%=ptnPreview.getMemberName()%></td><td><%=ptnPreview.getPartnerLocation()%></td><td><%=ptnPreview.getPartnerStyles()%></td><td>★<%=Math.floor(ptnPreview.getMetascore()*10)/10%></td>
+						</tr>
+					</table>
+				</div>
+			</td>
+				<%if(2 == colCount % 3){%>
+		</tr>
+		<%			
+				}colCount++;
+			}
+		}else{%>
+		<tr><td><h1>검색결과가 존재하지 않습니다.</h1></td></tr>
+		<%} %>
+	</table>
 <%}else{%>
 	<h1><%=(String)request.getAttribute("msg")%></h1>
 <%}%>

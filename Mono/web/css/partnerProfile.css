@@ -15,10 +15,42 @@
 	height:36px;
 }
 
-.photoThumnail:hover:not(.blank){
+.photoThumnail:hover:not(.blank), .ptnInfoTab:hover{
 	cursor:pointer;
 }
 
 .blank{
 	border: 1px solid black;
+}
+
+.ptnBtn{
+	width:100px;
+	height:25px;
+	border:1px solid black;
+}
+
+.ptnInfoTab{
+	width:200px;
+	height:60px;
+	text-align:center;
+	line-height:60px;
+	font-size:20px;
+	border:1px solid black;
+}
+
+.detailInfoTab *{
+	
+}
+
+.detailInfoArea{
+	width:1600px;
+	height:1600px;
+}
+
+.detailInfoArea *{
+	text-align:center;
+}
+
+.detailInfoArea td{
+	border:1px solid black;	
 }
