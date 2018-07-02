@@ -35,7 +35,6 @@ public class PartnersService {
 		Connection con = JDBCTemplate.getConnection();
 		ArrayList<ProfileVo> list = partnerDao.selectPartnersListByKeyword(con, condition, keyword, currentPage, limit);
 		JDBCTemplate.close(con); // 자원 반납
-
 		return list;
 	}
 

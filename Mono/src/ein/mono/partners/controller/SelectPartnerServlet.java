@@ -34,6 +34,7 @@ public class SelectPartnerServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String ptnCode = request.getParameter("partnerCode");
 		ProfileVo ptnProfile = new PartnersService().selectPartner(ptnCode);
+		//String photoIndex = request.getParameter("photoIndex") != null ? request.getParameter("photoIndex") : "1";
 		String url = null;
 		
 		if(null != ptnProfile) {
@@ -43,6 +44,7 @@ public class SelectPartnerServlet extends HttpServlet {
 		}else {
 			url = "/views/partners/partnerProfile.jsp";
 			request.setAttribute("msg", "failed");
+			//request.setAttribute("photoIndex", photoIndex);
 		}
 		
 		request.getRequestDispatcher(url).forward(request, response);

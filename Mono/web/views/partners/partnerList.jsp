@@ -21,30 +21,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/mono/css/partnerList.css?ver=1" type="text/css"/>
+<link rel="stylesheet" href="/mono/css/partnerList.css" type="text/css"/>
 <script type="text/javascript" src="/mono/js/jquery-3.3.1.min.js">
-	function movePage(pageNum){ // 여기부터 시작
-		<%if(listType.contains("Search")){%>
-			var condition = "";
-			var keyword = "";
-			<%if(listType.contains("ptn_name")){%>
-				condition = "ptn_name";
-			<%}else if(listType.contains("ptn_location")){%>
-				condition = "ptn_location";
-			<%}else if(listType.contains("ptn_styles")){%>
-				condition = "ptn_styles";
-			<%}%>
-			keyword = listType.split(':')[1];
-			location.href = "/mono/searchPartnersList.do?condition="+condition+"&keyword="+keyword+"&currentPage=" + pageNum;
-		<%}else if(listType.contains("Category")){%>
-			var category = "All";
-			<%if(listType.contains("우수업체")){%>
-				category = "우수업체";
-			<%}%>
-			location.href="/mono/selectPartnersList.do?category="+category+"&currentPage=" + pageNum;
-		<%}%>
-	}
-	
 	function selectPartner(partnerCode){
 		location.href = "/mono/selectPartner.do?partnerCode="+partnerCode;
 	}
@@ -179,6 +157,28 @@
 		var condition = $("#searchCondition").val();
 		var keyword = $("#searchText").val();
 		location.href = "/mono/searchPartnersList.do?condition="+condition+"&keyword="+keyword;
+	}
+	
+	function movePage(pageNum){ // 여기부터 시작
+		<%if(listType.contains("Search")){%>
+			var condition = "";
+			var keyword = "";
+			<%if(listType.contains("ptn_name")){%>
+				condition = "ptn_name";
+			<%}else if(listType.contains("ptn_location")){%>
+				condition = "ptn_location";
+			<%}else if(listType.contains("ptn_styles")){%>
+				condition = "ptn_styles";
+			<%}%>
+			keyword = "<%=listType.split(":")[1]%>";
+			location.href = "/mono/searchPartnersList.do?condition="+condition+"&keyword="+keyword+"&currentPage=" + pageNum;
+			<%}else if(listType.contains("Category")){%>
+			var category = "All";
+			<%if(listType.contains("우수업체")){%>
+				category = "우수업체";
+			<%}%>
+			location.href="/mono/selectPartnersList.do?category="+category+"&currentPage=" + pageNum;
+		<%}%>
 	}
 	
 	$(function(){
