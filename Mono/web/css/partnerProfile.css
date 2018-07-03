@@ -67,8 +67,32 @@
 	border-spacing:0px 0px;
 }
 
-.detailInfoArea{
-	
+#detailInfoArea{
+	margin:auto;
+}
+
+.detailInfoColTitle{
+	padding:10px;
+	width:200px;
+	height:auto;
+	font-size:20px;
+	font-weight:bold;
+}
+
+.detailInfoColContent{
+	padding-bottom:20px;
+	padding-top:20px;
+	width:760px;
+	height:auto;
+	font-size:20px;
+}
+
+#introArea{
+	border:1px solid black;
+	width:930px;
+	padding:30px;
+	font-size:18px;
+	text-align:justify;
 }
 
 #detailInfoArea *{
@@ -103,7 +127,7 @@
 
 .ptnProfileArea{
 	width:1600px;
-	height:1600px;
+	height:2500px;
 	margin-left:450px;
 	margin-right:auto;
 }

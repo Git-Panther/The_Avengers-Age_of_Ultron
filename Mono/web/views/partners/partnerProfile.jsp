@@ -79,26 +79,26 @@
 	<div id="detailInfoArea">	
 		<table>
 			<tr>
-				<td>업체명</td>
-				<td><%=ptnProfile.getMemberName()%></td>
+				<td class="detailInfoColTitle">업체명</td>
+				<td class="detailInfoColContent"><%=ptnProfile.getMemberName()%></td>
 			</tr>
 			<tr>
-				<td>시공 지역</td>
-				<td><%=ptnProfile.getPartnerLocation()%></td>
+				<td class="detailInfoColTitle">시공 지역</td>
+				<td class="detailInfoColContent"><%=ptnProfile.getPartnerLocation()%></td>
 			</tr>
 			<tr>
-				<td>스타일</td>
-				<td><%=ptnProfile.getPartnerStyles()%></td>
+				<td class="detailInfoColTitle">스타일</td>
+				<td class="detailInfoColContent"><%=ptnProfile.getPartnerStyles()%></td>
 			</tr>
 			<tr>
-				<td>상담시간</td>
-				<td>평일 <%=ptnProfile.getWeekdaysStart()%> ~ <%=ptnProfile.getWeekdaysEnd()%><br>
+				<td class="detailInfoColTitle">상담시간</td>
+				<td class="detailInfoColContent">평일 <%=ptnProfile.getWeekdaysStart()%> ~ <%=ptnProfile.getWeekdaysEnd()%><br>
 					주말 <%=ptnProfile.getWeekendStart()%> ~ <%=ptnProfile.getWeekendEnd()%><br>
 				</td>
 			</tr>
 			<tr>
-				<td>문의</td>
-				<td>
+				<td class="detailInfoColTitle">문의</td>
+				<td class="detailInfoColContent">
 				<% 
 					ArrayList<PtnContact> ptnContacts = ptnProfile.getPtnContacts();
 					if(0 < ptnContacts.size()){
@@ -118,8 +118,8 @@
 					for(PtnUpdate updateInfo : ptnUpdates){
 			%>
 			<tr>
-				<td><%=updateInfo.getUpdateName()%></td>
-				<td><%=updateInfo.getUpdateContent()%></td>
+				<td class="detailInfoColTitle"><%=updateInfo.getUpdateName()%></td>
+				<td class="detailInfoColContent"><%=updateInfo.getUpdateContent()%></td>
 			</tr>	
 			<%
 					}
